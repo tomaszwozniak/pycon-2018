@@ -1,77 +1,78 @@
 <!doctype html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>reveal.js</title>
+    <title>reveal.js</title>
 
-		<link rel="stylesheet" href="css/reveal.css">
-		<link rel="stylesheet" href="css/theme/black.css">
+    <link rel="stylesheet" href="css/reveal.css">
+    <link rel="stylesheet" href="css/theme/black.css">
 
-		<!-- Theme used for syntax highlighting of code -->
-		<link rel="stylesheet" href="lib/css/zenburn.css">
+    <!-- Theme used for syntax highlighting of code -->
+    <link rel="stylesheet" href="lib/css/zenburn.css">
 
-		<!-- Printing and PDF exports -->
-		<script>
-			var link = document.createElement( 'link' );
-			link.rel = 'stylesheet';
-			link.type = 'text/css';
-			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
-			document.getElementsByTagName( 'head' )[0].appendChild( link );
-		</script>
-	</head>
-	<body>
-		<div class="reveal">
-			<div class="slides">
-				<section>Równoległe uruchamianie testów behave przy pomocy Dockera.</section>
-				<section>
-					<section>
-						<h2>Wstęp</h2>
-						<p>Slajdy dostępne pod adresem:</p>
-					</section>
-					<section>
-						<h2>O mnie</h2>
-						<p>Team Leader 4+</p>
-						<p>Python Dev 8+</p>
-						<p>Web development 12+</p>
-						<br>
-						<p>WSB + UEP</p>
-					</section>
-				</section>
-				<section>
-					<section>"Dlaczego to tyle trwa?"</section>
-					<section>
-						<h2>"To", czyli:</h2>
-						<ul>
-							<li>testy automatyczne</li>
-							<li>behave, python, selenium</li>
-							<li>20 godzin testowania</li>
-						</ul>
-					</section>
-					<section>
-						<h2>Przygotowania:</h2>
-						<ul>
-							<li>automatyzowanie środowisk</li>
-							<li>stabilizacja</li>
-							<li>testy muszą być niezależne</li>
-						</ul>
-						<aside class="notes">
-						Oh hey, these are some notes. They'll be hidden in your presentation, but you can see them if you open the speaker notes window (hit 's' on your keyboard).
-						</aside>
-					</section>
-				</section>
-				<section>
-					<section>Rozwiązanie</section>
-					<section>
-						<img src="img/docker.png"/>
-					</section>
-					<section>
-						Selenium HUB
-					</section>
-					<section>
-						docker-compose
-						<pre><code class="hljs" data-trim contenteditable>
+    <!-- Printing and PDF exports -->
+    <script>
+        var link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
+        document.getElementsByTagName('head')[0].appendChild(link);
+    </script>
+</head>
+<body>
+<div class="reveal">
+    <div class="slides">
+        <section>Równoległe uruchamianie testów behave przy pomocy Dockera.</section>
+        <section>
+            <section>
+                <h2>Wstęp</h2>
+                <p>Slajdy dostępne pod adresem:</p>
+            </section>
+            <section>
+                <h2>O mnie</h2>
+                <p>Team Leader 4+</p>
+                <p>Python Dev 8+</p>
+                <p>Web development 12+</p>
+                <br>
+                <p>WSB + UEP</p>
+            </section>
+        </section>
+        <section>
+            <section>"Dlaczego to tyle trwa?"</section>
+            <section>
+                <h2>"To", czyli:</h2>
+                <ul>
+                    <li>testy automatyczne</li>
+                    <li>behave, python, selenium</li>
+                    <li>20 godzin testowania</li>
+                </ul>
+            </section>
+            <section>
+                <h2>Przygotowania:</h2>
+                <ul>
+                    <li>automatyzowanie środowisk</li>
+                    <li>stabilizacja</li>
+                    <li>testy muszą być niezależne</li>
+                </ul>
+                <aside class="notes">
+                    Oh hey, these are some notes. They'll be hidden in your presentation, but you can see them if you
+                    open the speaker notes window (hit 's' on your keyboard).
+                </aside>
+            </section>
+        </section>
+        <section>
+            <section>Rozwiązanie</section>
+            <section>
+                <img src="img/docker.png"/>
+            </section>
+            <section>
+                Selenium HUB
+            </section>
+            <section>
+                docker-compose
+                <pre><code class="hljs" data-trim contenteditable>
 version: "3"
 services:
   selenium-hub:
@@ -87,72 +88,94 @@ services:
       - HUB_HOST=selenium-hub
       - HUB_PORT=4444
 						</code></pre>
-					</section>
-					<section>
-						lets try it
-					</section>
-					<section>
-						testy bdd
-					</section>
-					<section>
-						python behave
-					</section>
-					<section>
-						formattery
-					</section>
-					<section>
-						dzielenie na wątki (na jakiej podstawie)
-					</section>
-					<section>
-						przechowywanie czasów testów
-					</section>
-					<section>
-						użycie hooków behave do wysylania danych
-					</section>
-					<section>
-						tagowanie testów
-					</section>
-					<section>
-						doceryzowania procesów behave (nie przeglądarek)
-					</section>
-					<section>
-						skalowalnie przeglądek
-					</section>
-				</section>
-				<section>
-					<section>Analiza wyników</section>
-					<section>Agregracja wątków</section>
-					<section>Przehowywanie screenshotow</section>
-					<section>Raport końcowy</section>
-				</section>
-				<section>
-					<section>
-						Podusumowanie
-					</section>
-					<section>Analiza coverage na przykładzie aplikacji django</section>
-					<section>Analiza utlizacji komputera podczas uruchamiania testów</section>
-					<section>Top 5 najdłuższy scenariuszy</section>
-					<section>Top 5 najczęśćiej powtarzanych testów</section>
-					<section>Thats all folks</section>
-				</section>
-			</div>
-		</div>
+            </section>
+            <section>
+                lets try it
+            </section>
+            <section>
+                testy bdd
+            </section>
+            <section>
+                Testowa aplikacja - volontulo
+            </section>
+            <section>
+                python behave
+            </section>
+            <section>
+                formattery
+                json formatter
+                zbieranie czasów do kupy
+                zapisywanie testów
+                aplikacja API
+                "name": "I clear marketing consents for user ipsum_lorem_user with DJANGO ADMIN",
+                "result": {
+                "duration": 3.4507088661193848,
+                "status": "passed"
+                },
 
-		<script src="lib/js/head.min.js"></script>
-		<script src="js/reveal.js"></script>
+            </section>
+            <section>
+                dzielenie na wątki (na jakiej podstawie)
+                musimy widziec ile chcemy uzyc watkow (lub wpasc na pomysl autoscallowania)
+                zliczamy ile mozemy poswiecic czasu na jeden watek (np mamy 4h testow i 4 watki)
+                przechodzimy po kazdym tescie i odejmujemy od zasobow czasu posczegolne czasy
+                gdy czas w watku sie skonczy, zmieniamy taga na thread2 itd az do wypelnienia calego repozytoriu tagami
+            </section>
+            <section>
+                przechowywanie czasów testów
+            </section>
+            <section>
+                użycie hooków behave do wysylania danych
+            </section>
+            <section>
+                tagowanie testów
+            </section>
+            <section>
+                doceryzowania procesów behave (nie przeglądarek)
+                uzycie unixowego at
+            </section>
+            <section>
+                skalowalnie przeglądek
+            </section>
+        </section>
+        <section>
+            <section>Analiza wyników</section>
+            <section>Agregracja wątków</section>
+            <section>Przehowywanie screenshotow</section>
+            <section>Raport końcowy</section>
+        </section>
+        <section>
+            <section>
+                Podusumowanie
+            </section>
+            <section>Analiza coverage na przykładzie aplikacji django</section>
+            <section>Analiza utlizacji komputera podczas uruchamiania testów</section>
+            <section>Top 5 najdłuższy scenariuszy</section>
+            <section>Top 5 najczęśćiej powtarzanych testów</section>
+            <section>Thats all folks</section>
+        </section>
+    </div>
+</div>
 
-		<script>
-			// More info about config & dependencies:
-			// - https://github.com/hakimel/reveal.js#configuration
-			// - https://github.com/hakimel/reveal.js#dependencies
-			Reveal.initialize({
-				dependencies: [
-					{ src: 'plugin/markdown/marked.js' },
-					{ src: 'plugin/markdown/markdown.js' },
-					{ src: 'plugin/notes/notes.js', async: true },
-					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
-				]
-			});
-		</script>
-	</body>
+<script src="lib/js/head.min.js"></script>
+<script src="js/reveal.js"></script>
+
+<script>
+    // More info about config & dependencies:
+    // - https://github.com/hakimel/reveal.js#configuration
+    // - https://github.com/hakimel/reveal.js#dependencies
+    Reveal.initialize({
+        dependencies: [
+            {src: 'plugin/markdown/marked.js'},
+            {src: 'plugin/markdown/markdown.js'},
+            {src: 'plugin/notes/notes.js', async: true},
+            {
+                src: 'plugin/highlight/highlight.js', async: true, callback: function () {
+                hljs.initHighlightingOnLoad();
+            }
+            }
+        ]
+    });
+</script>
+</body>
 </html>
