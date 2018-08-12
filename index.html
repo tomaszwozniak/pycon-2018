@@ -24,37 +24,46 @@
 <body>
 <div class="reveal">
     <div class="slides">
-        <section>Równoległe uruchamianie testów behave przy pomocy Dockera.</section>
+        <section>
+            <h2>Behave parallel run on Docker</h2>
+            <p>Slides available on http://twozniak.pl/blabla</p>
+        </section>
         <section>
             <section>
-                <h2>Wstęp</h2>
-                <p>Slajdy dostępne pod adresem:</p>
-            </section>
-            <section>
-                <h2>O mnie</h2>
+                <h2>HEllo</h2>
                 <p>Team Leader 4+</p>
-                <p>Python Dev 8+</p>
-                <p>Web development 12+</p>
-                <br>
-                <p>WSB + UEP</p>
+                <p>Python developer 8+</p>
+                <p>Software developer 12+</p>
             </section>
         </section>
         <section>
-            <section>"Dlaczego to tyle trwa?"</section>
+            <section>"Why it takes so long?!"</section>
             <section>
-                <h2>"To", czyli:</h2>
+                <h2>Technology stack</h2>
                 <ul>
-                    <li>testy automatyczne</li>
+                    <li>tests BDD</li>
                     <li>behave, python, selenium</li>
-                    <li>20 godzin testowania</li>
+                    <li>20 hours of testing</li>
                 </ul>
             </section>
             <section>
-                <h2>Przygotowania:</h2>
+                <h2>Behaviour Driven Development</h2>
+                <pre><code class="hljs" data-trim contenteditable>
+                    Feature: Managing users
+
+                      Scenario: Creating user
+                         Given I am logged as Super user
+                          When I create Stuff user
+                          Then Stuff user is visible on user list page
+                           And I should be able to login as stuff user
+
+                </code></pre>
+            </section>
+            <section>
+                <h2>Before everything:</h2>
                 <ul>
-                    <li>automatyzowanie środowisk</li>
-                    <li>stabilizacja</li>
-                    <li>testy muszą być niezależne</li>
+                    <li>stable scallable environment</li>
+                    <li>independent scenarios</li>
                 </ul>
                 <aside class="notes">
                     Oh hey, these are some notes. They'll be hidden in your presentation, but you can see them if you
@@ -63,9 +72,9 @@
             </section>
         </section>
         <section>
-            <section>Rozwiązanie</section>
+            <section><h2>Solution</h2></section>
             <section>
-                <img src="img/docker.png"/>
+                <img src="img/docker.gif"/>
             </section>
             <section>
                 Selenium HUB
@@ -96,18 +105,11 @@ services:
                 testy bdd
             </section>
             <section>
-                Testowa aplikacja - volontulo
-            </section>
-            <section>
-                python behave
+                python behave selenium webdriver browser
             </section>
             <section>
                 formattery
-                json formatter
-                zbieranie czasów do kupy
-                zapisywanie testów
-                aplikacja API
-                "name": "I clear marketing consents for user ipsum_lorem_user with DJANGO ADMIN",
+                "name": "xxx",
                 "result": {
                 "duration": 3.4507088661193848,
                 "status": "passed"
@@ -115,43 +117,51 @@ services:
 
             </section>
             <section>
-                dzielenie na wątki (na jakiej podstawie)
-                musimy widziec ile chcemy uzyc watkow (lub wpasc na pomysl autoscallowania)
-                zliczamy ile mozemy poswiecic czasu na jeden watek (np mamy 4h testow i 4 watki)
-                przechodzimy po kazdym tescie i odejmujemy od zasobow czasu posczegolne czasy
-                gdy czas w watku sie skonczy, zmieniamy taga na thread2 itd az do wypelnienia calego repozytoriu tagami
+                <h2>Dividing tasks: Approach #1</h2>
+                - count scenarios lines and use it for estimating time
+                - tag everything!
+                <wizualization>
             </section>
             <section>
-                przechowywanie czasów testów
+                <h2>Dividing tasks: Approach #2</h2>
+                - store (somewhere) times and estimate base on that
+                - count scenarios lines and use it for estimating time
+                - tag everything
+                <wizualization>
             </section>
             <section>
-                użycie hooków behave do wysylania danych
+                <h2>Dividing tasks: Approach #3 (The best!)</h2>
+                - distribute scenarios as messages to queue server
+                - execute behave as workers
+                - keep workers working till the last message
+                <wizualization>
             </section>
             <section>
-                tagowanie testów
+                We need more containers!
+                <img src="img/docker-meme.jpg"/>
             </section>
             <section>
-                doceryzowania procesów behave (nie przeglądarek)
-                uzycie unixowego at
+                RabbitMQ
             </section>
             <section>
-                skalowalnie przeglądek
+                Celery
             </section>
         </section>
         <section>
-            <section>Analiza wyników</section>
-            <section>Agregracja wątków</section>
-            <section>Przehowywanie screenshotow</section>
-            <section>Raport końcowy</section>
+            <section>Monitoring tools</section>
+            <section>Screenshots hosting</section>
+            <section>Presenting test results</section>
         </section>
         <section>
             <section>
-                Podusumowanie
+                Summary
             </section>
-            <section>Analiza coverage na przykładzie aplikacji django</section>
-            <section>Analiza utlizacji komputera podczas uruchamiania testów</section>
-            <section>Top 5 najdłuższy scenariuszy</section>
-            <section>Top 5 najczęśćiej powtarzanych testów</section>
+            <section>Keyword - scaling
+
+            </section>
+            <section>Find top 5 the longest task and fix these</section>
+            <section>Find top 5 the most often repeated tests (false positive, false negative) and fix these</section>
+            <section>Find your own way to calculate coverage - pro tip</section>
             <section>Thats all folks</section>
         </section>
     </div>
