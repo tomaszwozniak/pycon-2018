@@ -25,25 +25,27 @@
 <div class="reveal">
     <div class="slides">
         <section>
-            <h2>Behave parallel run on Docker</h2>
-            <p>Slides available on http://twozniak.pl/blabla</p>
-        </section>
-        <section>
             <section>
                 <h2>HEllo</h2>
+                <p>STX Next</p>
                 <p>Team Leader 4+</p>
                 <p>Python developer 8+</p>
                 <p>Software developer 12+</p>
             </section>
         </section>
         <section>
+            <h2>Behave parallel run on Docker</h2>
+            <p>Slides: http://twozniak.pl/blabla</p>
+            <p>Repository: http://github/blabla</p>
+        </section>
+        <section>
             <section>"Why it takes so long?!"</section>
             <section>
                 <h2>Technology stack</h2>
                 <ul>
-                    <li>tests BDD</li>
-                    <li>behave, python, selenium</li>
-                    <li>20 hours of testing</li>
+                    <li>python</li>
+                    <li>behave, selenium</li>
+                    <li>docker</li>
                 </ul>
             </section>
             <section>
@@ -62,22 +64,32 @@
             <section>
                 <h2>Before everything:</h2>
                 <ul>
-                    <li>stable scallable environment</li>
+                    <li>stable and scallable environment</li>
                     <li>independent scenarios</li>
+                    <li>fixtures?</li>
                 </ul>
                 <aside class="notes">
                     Oh hey, these are some notes. They'll be hidden in your presentation, but you can see them if you
                     open the speaker notes window (hit 's' on your keyboard).
                 </aside>
             </section>
+            <section>
+                <h2>Required components:</h2>
+                <ul>
+                    <li>browser</li>
+                    <li>selenium webdriver</li>
+                    <li>python environment</li>
+                </ul>
+            </section>
         </section>
         <section>
-            <section><h2>Solution</h2></section>
             <section>
+                <h5>Docker</h5>
                 <img src="img/docker.gif"/>
             </section>
             <section>
-                Selenium HUB
+                <h5>Selenium HUB</h5>
+                <img src="img/Grid.png"/>
             </section>
             <section>
                 docker-compose
@@ -89,8 +101,8 @@ services:
     container_name: selenium-hub
     ports:
       - "4444:4444"
-  chrome:
-    image: selenium/node-chrome:3.13.0-argon
+   firefox:
+    image: selenium/node-firefox:3.12.0-cobalt
     depends_on:
       - selenium-hub
     environment:
@@ -102,39 +114,42 @@ services:
                 lets try it
             </section>
             <section>
-                testy bdd
+                <h5>Required components:</h5>
+                <ul>
+                    <li>browser [done]</li>
+                    <li>selenium webdriver [done]</li>
+                    <li>python environment</li>
+                </ul>
             </section>
             <section>
-                python behave selenium webdriver browser
+                <h5>Dividing tasks: Approach #1</h5>
+                <li>count scenarios lines and use it for estimating time</li>
+                <li>tag everything</li>
             </section>
             <section>
-                formattery
-                "name": "xxx",
-                "result": {
-                "duration": 3.4507088661193848,
-                "status": "passed"
-                },
-
+                <h5>Dividing scenarios based on steps number</h5>
+                <img src="img/diagram2.png">
             </section>
             <section>
-                <h2>Dividing tasks: Approach #1</h2>
-                - count scenarios lines and use it for estimating time
-                - tag everything!
-                <wizualization>
+                <h5>Dividing tasks: Approach #2</h5>
+                <li>store (somewhere) times and estimate base on that</li>
+                <li>count scenarios lines and use it for estimating time</li>
+                <li>tag everything</li>
             </section>
             <section>
-                <h2>Dividing tasks: Approach #2</h2>
-                - store (somewhere) times and estimate base on that
-                - count scenarios lines and use it for estimating time
-                - tag everything
-                <wizualization>
+                <img src="img/diagramtimes.png">
             </section>
             <section>
-                <h2>Dividing tasks: Approach #3 (The best!)</h2>
-                - distribute scenarios as messages to queue server
-                - execute behave as workers
-                - keep workers working till the last message
-                <wizualization>
+                <img src="img/diagramretry.png">
+            </section>
+            <section>
+                <h5>Dividing tasks: Approach #3 (The best!)</h5>
+                <li>distribute scenarios as messages to queue server</li>
+                <li>execute behave as workers</li>
+                <li>keep workers working untill the last message</li>
+            </section>
+            <section>
+                <img src="img/diagramcelery.png">
             </section>
             <section>
                 We need more containers!
@@ -142,15 +157,87 @@ services:
             </section>
             <section>
                 RabbitMQ
+             <pre><code class="hljs" data-trim contenteditable>
+rabbit1:
+    image: "rabbitmq:3-management"
+    hostname: "rabbit1"
+    environment:
+      RABBITMQ_ERLANG_COOKIE: "SWQOKODSQALRPCLNMEQG"
+      RABBITMQ_DEFAULT_USER: "rabbitmq"
+      RABBITMQ_DEFAULT_PASS: "rabbitmq"
+      RABBITMQ_DEFAULT_VHOST: "/"
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+    labels:
+      NAME: "rabbitmq1"
+</code></pre>
             </section>
             <section>
-                Celery
+                <h5>Worker - Dockerfile</h5>
+                <pre><code class="hljs" data-trim contenteditable>
+FROM python:3
+
+WORKDIR /opt/testing
+
+COPY requirements.txt ./
+RUN pip install --no-cache-dir -r requirements.txt
+
+CMD ["celery", "worker", "-A", "tasks", "--loglevel=info", "-Q", "behave", "-c", "1"]
+                    </code></pre>
+                <aside class="notes">
+                    To show in code
+                </aside>
             </section>
-        </section>
-        <section>
-            <section>Monitoring tools</section>
-            <section>Screenshots hosting</section>
-            <section>Presenting test results</section>
+            <section>
+                <h5>Aggregate results - allure</h5>
+                <pre><code class="hljs" data-trim contenteditable>
+{
+    "historyId": "6ce3e124fc33feeed324c799f5fa9936",
+    "labels": [
+        {
+            "name": "severity",
+            "value": "normal"
+        },
+        {
+            "name": "feature",
+            "value": "Managing users"
+        },
+        {
+            "name": "framework",
+            "value": "behave"
+        },
+        {
+            "name": "language",
+            "value": "cpython3"
+        }
+    ],
+    "name": "Creating user",
+    "start": 1534192230174,
+    "status": "passed",
+    "steps": [
+        {
+            "name": "Given I am logged as Super user",
+            "start": 1534192230175,
+            "status": "passed",
+            "stop": 1534192230175
+        },
+        ...
+    ],
+    "stop": 1534192235187,
+    "uuid": "63c1d839-5dfb-4214-85d8-8328be8601f9"
+}
+                </code></pre>
+            </section>
+            <section>
+                <h5>Allure GUI</h5>
+                 <img src="img/allure.png"/>
+            </section>
+            <section>
+                <h5>Monitoring tools</h5>
+                <li>Celery flower</li>
+                <li>rabbitmqctl</li>
+            </section>
         </section>
         <section>
             <section>
@@ -159,9 +246,8 @@ services:
             <section>Keyword - scaling
 
             </section>
-            <section>Find top 5 the longest task and fix these</section>
-            <section>Find top 5 the most often repeated tests (false positive, false negative) and fix these</section>
-            <section>Find your own way to calculate coverage - pro tip</section>
+            <section>Find top 5 the longest task and fix them</section>
+            <section>Find top 5 the most often repeated tests (false positive, false negative) and fix them</section>
             <section>Thats all folks</section>
         </section>
     </div>
