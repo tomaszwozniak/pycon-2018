@@ -31,22 +31,45 @@
         </section>
         <section>
             <section>
-                <h2>HEllo</h2>
-                <p>STX Next</p>
+                <h2>Tomasz Woźniak</h2>
                 <p>Team Leader 4+</p>
                 <p>Python developer 8+</p>
                 <p>Software developer 12+</p>
+                <p><img src="img/stx.png"></p>
+                <p><img src="img/optimad.png"></p>
+            </section>
+        </section>
+        <section>
+            <section>
+                <h2>CopyCentral</h2>
+                <li>crucial clearance platform for commercials in UK</li>
+                <li>confidential data</li>
+                <li>complex workflow</li>
+                <li>handles large file uploads, transcodes and automated checks</li>
+                <li>24 hours E2E tests (and still growing!)</li>
             </section>
         </section>
 
         <section>
-            <section>"Why it takes so long?!"</section>
+            <section><h2>"Why it takes so long?!"</h2>
+                <li>tests E2E are slow*</li>
+                <li>a very large number of scenarios</li>
+                </section>
+            <section>
+                <h2>*Do we really need this?</h2>
+                <ul>
+                    <li>wait for event, don't use time.sleep()</li>
+                    <li>use reasonably scenario outlines</li>
+                    <li>write non GUI BDD tests</li>
+                    <li>and more ...</li>
+                </ul>
+            </section>
             <section>
                 <h2>Technology stack</h2>
                 <ul>
-                    <li>python</li>
-                    <li>behave, selenium</li>
-                    <li>docker</li>
+                    <li>Python</li>
+                    <li>Behave, Selenium</li>
+                    <li>Docker</li>
                 </ul>
             </section>
             <section>
@@ -57,7 +80,7 @@
                       Scenario: Creating user
                          Given I am logged as Super user
                           When I create Stuff user
-                          Then Stuff user is visible on user list page
+                          Then Staff user is visible on user list page
                            And I should be able to login as stuff user
 
                 </code></pre>
@@ -78,8 +101,8 @@
                 <h2>Required components:</h2>
                 <ul>
                     <li>browser</li>
-                    <li>selenium webdriver</li>
-                    <li>python environment</li>
+                    <li>Selenium webdriver</li>
+                    <li>Python environment</li>
                 </ul>
             </section>
         </section>
@@ -242,13 +265,20 @@ CMD ["celery", "worker", "-A", "tasks", "--loglevel=info", "-Q", "behave", "-c",
         </section>
         <section>
             <section>
-                Summary
+                <h2>Summary</h2>
+            </section>
+            <section>
+                <h2>CopyCentral</h2>
+                <li>reduced time run to an hour (32 parallel processes)</li>
+                <li>production smoke testing</li>
+                <li>no tests no merge</li>
+
             </section>
             <section>Keyword - scaling
 
             </section>
-            <section>Find top 5 the longest scenarios and fix them</section>
-            <section>Find top 5 the most often repeated tests (false positive, false negative) and fix them</section>
+            <section>Find top 5 longest scenarios and fix them</section>
+            <section>Find top most often repeated tests (false positive, false negative) and fix them</section>
             <section>
                 <h5>Thanks</h5>
                 <a href="https://github.com/SeleniumHQ/docker-selenium">https://github.com/SeleniumHQ/docker-selenium</a>
